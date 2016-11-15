@@ -85,6 +85,7 @@ export function getWebpackCommonConfig(
       ]
     },
     plugins: [
+      new webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
         template: path.resolve(appRoot, appConfig.index),
         filename: path.resolve(appConfig.outDir, appConfig.index),
