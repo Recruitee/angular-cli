@@ -28,6 +28,8 @@ export const getWebpackNonAotConfigPartial = function(projectRoot: string, appCo
         {
           test: /\.ts$/,
           loaders: [{
+            loader: '@angularclass/hmr-loader'
+          },{
             loader: 'awesome-typescript-loader',
             query: {
               forkChecker: true,
