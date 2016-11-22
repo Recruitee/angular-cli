@@ -19,7 +19,7 @@ export const getWebpackNonAotConfigPartial = function(projectRoot: string, appCo
     resolve: {
       plugins: [
         new atl.TsConfigPathsPlugin({
-          tsconfig: path.resolve(appRoot, appConfig.tsconfig)
+          configFileName: path.resolve(appRoot, appConfig.tsconfig)
         })
       ]
     },
@@ -30,21 +30,21 @@ export const getWebpackNonAotConfigPartial = function(projectRoot: string, appCo
           loaders: [{
             loader: '@angularclass/hmr-loader'
           },{
-            loader: 'awesome-typescript-loader',
+            loader: 'ts-loader',
             query: {
-              forkChecker: true,
-              tsconfig: path.resolve(appRoot, appConfig.tsconfig)
+              configFileName: path.resolve(appRoot, appConfig.tsconfig),
+              // transpileOnly: true
             }
           }, {
             loader: 'angular2-template-loader'
           }],
-          exclude: [/\.(spec|e2e)\.ts$/]
+          exclude: [/node_modules/, /\.(spec)\.ts$/]
         }
       ],
     },
     plugins: [
       new webpack.ContextReplacementPlugin(/.*/, appRoot, lazyModules),
-      new atl.ForkCheckerPlugin(),
+      // new atl.ForkCheckerPlugin(),
     ]
   };
 };

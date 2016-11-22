@@ -108,7 +108,22 @@ module.exports = {
     // Return custom template variables here.
     return {
       __path__: () => {
-        return `src/app/ui/components/${options.locals.rtKind.toLowerCase().replace(' ','-')}/${options.dasherizedModuleName}`;
+        var dir = this.dynamicPath.dir;
+        if (!options.locals.flat) {
+          dir += path.sep + options.dasherizedModuleName;
+        }
+        var srcDir = this.project.ngConfig.apps[0].root;
+        var kindDirname = options.locals.rtKind.toLowerCase().replace(' ','-');
+        var kindMatch = dir.match(/.*\/components\/ui\/(.*)\/.*$/);
+
+        this.appDir = dir.substr(dir.indexOf(srcDir) + srcDir.length);
+        this.generatePath = dir;
+
+        if(kindMatch) {
+          return dir;
+        }
+
+        return `src/app/ui/components/${kindDirname}/${options.dasherizedModuleName}`
       },
       __styleext__: () => {
         return this.styleExt;
