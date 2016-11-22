@@ -59,6 +59,7 @@ function mapBlueprintName(name: string): string {
 const aliasMap: { [alias: string]: string } = {
   'cl': 'class',
   'c': 'component',
+  'rtc': 'rt-component',
   'd': 'directive',
   'e': 'enum',
   'm': 'module',

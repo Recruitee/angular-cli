@@ -81,7 +81,8 @@ export function getWebpackCommonConfig(
         { test: /\.html$/, loader: 'raw-loader' },
 
         { test: /\.(otf|ttf|woff|woff2)$/, loader: 'url?limit=10000' },
-        { test: /\.(eot|svg)$/, loader: 'file-loader' }
+        { test: /\/icon\/sets\/(font-awesome|ionic)\/(.*)\.(svg)$/, loader: 'svg-sprite'}
+        // { test: /\.(eot|svg)$/, loader: 'file-loader' }
       ]
     },
     plugins: [
