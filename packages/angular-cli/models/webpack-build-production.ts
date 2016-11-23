@@ -24,9 +24,9 @@ export const getWebpackProdConfigPartial = function(projectRoot: string, appConf
     devtool: 'source-map',
     output: {
       path: path.resolve(projectRoot, appConfig.outDir),
-      filename: '[name].[chunkhash].bundle.js',
-      sourceMapFilename: '[name].[chunkhash].bundle.map',
-      chunkFilename: '[id].[chunkhash].chunk.js'
+      filename: '[name].[hash].bundle.js',
+      sourceMapFilename: '[name].[hash].bundle.map',
+      chunkFilename: '[id].[hash].chunk.js'
     },
     module: {
       rules: [
@@ -57,6 +57,7 @@ export const getWebpackProdConfigPartial = function(projectRoot: string, appConf
         'process.env.NODE_ENV': JSON.stringify('production')
       }),
       new webpack.optimize.UglifyJsPlugin(<any>{
+        warnings: false,
         mangle: { screw_ie8 : true },
         compress: { screw_ie8: true },
         sourceMap: true
@@ -72,8 +73,9 @@ export const getWebpackProdConfigPartial = function(projectRoot: string, appConf
         options: {
           postcss: [
             require('postcss-discard-comments')
-          ]
-        }
+          ],
+          resolve: {}
+        },
       })
     ]
   };

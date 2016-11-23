@@ -13,7 +13,6 @@ export function getWebpackCommonConfig(
   appConfig: any,
   baseHref: string
 ) {
-
   const appRoot = path.resolve(projectRoot, appConfig.root);
   const appMain = path.resolve(appRoot, appConfig.main);
   const styles = appConfig.styles
@@ -30,6 +29,34 @@ export function getWebpackCommonConfig(
   // Only add styles/scripts if there's actually entries there
   if (appConfig.styles.length > 0) { entry['styles'] = styles; }
   if (appConfig.scripts.length > 0) { entry['scripts'] = scripts; }
+
+  entry['vendor'] = [
+    'rxjs',
+    '@angular/core',
+    '@angular/common',
+    '@angular/compiler',
+    '@angular/forms',
+    '@angular/http',
+    '@angular/platform-browser',
+    '@angular/platform-browser-dynamic',
+    '@angular/router',
+    'core-js/es6/symbol',
+    'core-js/es6/object',
+    'core-js/es6/function',
+    'core-js/es6/parse-int',
+    'core-js/es6/parse-float',
+    'core-js/es6/number',
+    'core-js/es6/math',
+    'core-js/es6/string',
+    'core-js/es6/date',
+    'core-js/es6/array',
+    'core-js/es6/regexp',
+    'core-js/es6/map',
+    'core-js/es6/set',
+    'core-js/es6/reflect',
+    'core-js/es7/reflect',
+    'zone.js/dist/zone'
+  ].map(vendor => path.resolve(projectRoot, 'node_modules', vendor));
 
   return {
     devtool: 'source-map',
@@ -87,7 +114,7 @@ export function getWebpackCommonConfig(
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NamedModulesPlugin(),
+      new webpack.NamedModulesPlugin(''),
       new HtmlWebpackPlugin({
         template: path.resolve(appRoot, appConfig.index),
         filename: path.resolve(appConfig.outDir, appConfig.index),
@@ -106,7 +133,7 @@ export function getWebpackCommonConfig(
       ),
       new webpack.optimize.CommonsChunkPlugin({
         // Optimizing ensures loading order in index.html
-        name: ['styles', 'scripts', 'main'].reverse()
+        name: ['vendor', 'styles', 'scripts', 'main'].reverse()
       }),
       new webpack.optimize.CommonsChunkPlugin({
         minChunks: Infinity,
@@ -119,7 +146,8 @@ export function getWebpackCommonConfig(
       new webpack.LoaderOptionsPlugin({
         test: /\.(css|scss|sass|less|styl)$/,
         options: {
-          postcss: [ autoprefixer() ]
+          postcss: [ autoprefixer() ],
+          resolve: {}
         },
       }),
     ],
