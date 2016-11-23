@@ -10,7 +10,6 @@ const webpackLoader: string = g['angularCliIsLocal']
   ? g.angularCliPackages['@ngtools/webpack'].main
   : '@ngtools/webpack';
 
-
 export const getWebpackNonAotConfigPartial = function(projectRoot: string, appConfig: any) {
   const appRoot = path.resolve(projectRoot, appConfig.root);
   const lazyModules = findLazyModules(appRoot);
