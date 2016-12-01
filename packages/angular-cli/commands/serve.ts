@@ -26,7 +26,9 @@ export interface ServeTaskOptions {
   sslKey?: string;
   sslCert?: string;
   aot?: boolean;
+  sourcemap?: boolean;
   open?: boolean;
+  vendorChunk?: boolean;
 }
 
 const ServeCommand = Command.extend({
@@ -81,6 +83,8 @@ const ServeCommand = Command.extend({
     { name: 'ssl-key',              type: String,  default: 'ssl/server.key' },
     { name: 'ssl-cert',             type: String,  default: 'ssl/server.crt' },
     { name: 'aot',                  type: Boolean, default: false },
+    { name: 'sourcemap',            type: Boolean, default: true, aliases: ['sm'] },
+    { name: 'vendor-chunk',         type: Boolean, default: true },
     {
       name: 'open',
       type: Boolean,

@@ -23,7 +23,9 @@ export default <any>Task.extend({
       runTaskOptions.environment,
       outputDir,
       runTaskOptions.baseHref,
-      runTaskOptions.aot
+      runTaskOptions.aot,
+      runTaskOptions.sourcemap,
+      runTaskOptions.vendorChunk
     ).config;
 
     const webpackCompiler: any = webpack(config);
